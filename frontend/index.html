@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Flux - A modern, eyecare-friendly social media platform with real-time chat, status updates, and beautiful design.">
+    <meta name="theme-color" content="#e8f5f0">
+    <title>Flux - Modern Social Communication</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/eyecare.css">
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-content">
+                    <div class="logo">
+                        <span class="logo-text">Flux</span>
+                    </div>
+                    
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Connect with Ease</h1>
+                        <p class="hero-description">
+                            Flux is a modern, eyecare-friendly social platform designed for real-time communication. 
+                            Share moments, chat instantly, and stay connected with beautiful simplicity.
+                        </p>
+                        <div class="hero-cta">
+                            <a href="pages/login.html" class="btn btn-primary">Login</a>
+                            <a href="pages/register.html" class="btn btn-secondary">Create Account</a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-illustration">
+                        <div class="illustration-placeholder">
+                            <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Illustration Background -->
+                                <rect width="400" height="400" fill="#f0fdf9" rx="20"/>
+                                
+                                <!-- Decorative circles -->
+                                <circle cx="350" cy="80" r="50" fill="#d4f1e8" opacity="0.6"/>
+                                <circle cx="80" cy="320" r="60" fill="#c8e6e0" opacity="0.4"/>
+                                <circle cx="320" cy="280" r="35" fill="#e0f7f2" opacity="0.5"/>
+                                
+                                <!-- Chat bubbles -->
+                                <g>
+                                    <!-- First bubble -->
+                                    <rect x="60" y="100" width="140" height="50" rx="15" fill="#a8d5c8"/>
+                                    <polygon points="55,135 35,155 60,150" fill="#a8d5c8"/>
+                                    <text x="75" y="130" font-family="Arial, sans-serif" font-size="12" fill="#fff">Hey! How's it going?</text>
+                                    
+                                    <!-- Second bubble (right aligned) -->
+                                    <rect x="240" y="160" width="120" height="50" rx="15" fill="#7cc4ba"/>
+                                    <polygon points="345,195 365,215 340,200" fill="#7cc4ba"/>
+                                    <text x="255" y="190" font-family="Arial, sans-serif" font-size="12" fill="#fff">All good! 🙌</text>
+                                    
+                                    <!-- Third bubble -->
+                                    <rect x="80" y="220" width="160" height="50" rx="15" fill="#a8d5c8"/>
+                                    <polygon points="75,255 55,275 80,265" fill="#a8d5c8"/>
+                                    <text x="95" y="245" font-family="Arial, sans-serif" font-size="12" fill="#fff">Check this out!</text>
+                                </g>
+                                
+                                <!-- User icons -->
+                                <g>
+                                    <!-- User 1 -->
+                                    <circle cx="120" cy="50" r="20" fill="#7cc4ba"/>
+                                    <circle cx="120" cy="45" r="8" fill="#fff"/>
+                                    <path d="M110 60 Q120 65 130 60" stroke="#fff" stroke-width="2" fill="none"/>
+                                    
+                                    <!-- User 2 -->
+                                    <circle cx="300" cy="100" r="20" fill="#5bb3a8"/>
+                                    <circle cx="300" cy="95" r="8" fill="#fff"/>
+                                    <path d="M290 110 Q300 115 310 110" stroke="#fff" stroke-width="2" fill="none"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Powerful Features</h2>
+                    <p class="section-subtitle">Everything you need in one beautiful app</p>
+                </div>
+                
+                <div class="features-grid">
+                    <!-- Feature 1: Chats -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="8" y="12" width="48" height="40" rx="8" fill="none" stroke="#5bb3a8" stroke-width="2"/>
+                                <path d="M16 20h32M16 28h32M16 36h24" stroke="#5bb3a8" stroke-width="2" stroke-linecap="round"/>
+                                <polygon points="16,48 10,58 16,52" fill="#5bb3a8"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Real-Time Chats</h3>
+                        <p class="feature-description">
+                            Instant messaging with lightning-fast delivery. 
+                            Chat with friends in real-time with zero lag.
+                        </p>
+                    </div>
+
+                    <!-- Feature 2: Timeline -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="8" y="8" width="48" height="48" rx="8" fill="none" stroke="#5bb3a8" stroke-width="2"/>
+                                <rect x="14" y="14" width="36" height="12" rx="4" fill="#5bb3a8" opacity="0.3"/>
+                                <rect x="14" y="30" width="36" height="12" rx="4" fill="#5bb3a8" opacity="0.3"/>
+                                <rect x="14" y="46" width="20" height="6" rx="3" fill="#5bb3a8" opacity="0.3"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Beautiful Timeline</h3>
+                        <p class="feature-description">
+                            Share moments and see what's happening with your network. 
+                            A gorgeous feed designed for storytelling.
+                        </p>
+                    </div>
+
+                    <!-- Feature 3: Status -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="32" cy="32" r="24" fill="none" stroke="#5bb3a8" stroke-width="2"/>
+                                <circle cx="24" cy="24" r="6" fill="#5bb3a8" opacity="0.5"/>
+                                <circle cx="40" cy="28" r="4" fill="#5bb3a8" opacity="0.5"/>
+                                <circle cx="28" cy="42" r="5" fill="#5bb3a8" opacity="0.5"/>
+                                <circle cx="44" cy="40" r="4" fill="#5bb3a8" opacity="0.5"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Status Updates</h3>
+                        <p class="feature-description">
+                            Share temporary status with photos or videos. 
+                            Ephemeral moments that disappear after 24 hours.
+                        </p>
+                    </div>
+
+                    <!-- Feature 4: Profile -->
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="32" cy="20" r="10" fill="none" stroke="#5bb3a8" stroke-width="2"/>
+                                <path d="M18 44 Q18 32 32 32 Q46 32 46 44" fill="none" stroke="#5bb3a8" stroke-width="2"/>
+                                <circle cx="32" cy="32" r="22" fill="none" stroke="#5bb3a8" stroke-width="1.5" opacity="0.3"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Personalized Profile</h3>
+                        <p class="feature-description">
+                            Express yourself with a customizable profile. 
+                            Control your public presence with ease.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Flux Section -->
+        <section class="why-flux">
+            <div class="container">
+                <div class="why-flux-content">
+                    <h2 class="section-title">Why Choose Flux?</h2>
+                    
+                    <div class="why-flux-list">
+                        <div class="why-item">
+                            <div class="why-icon">⚡</div>
+                            <div class="why-text">
+                                <h4>Lightning Fast</h4>
+                                <p>Optimized for speed. Real-time updates without the bloat.</p>
+                            </div>
+                        </div>
+
+                        <div class="why-item">
+                            <div class="why-icon">🔒</div>
+                            <div class="why-text">
+                                <h4>Privacy First</h4>
+                                <p>Your data is yours. We never sell or share your information.</p>
+                            </div>
+                        </div>
+
+                        <div class="why-item">
+                            <div class="why-icon">✨</div>
+                            <div class="why-text">
+                                <h4>Eyecare Friendly</h4>
+                                <p>Soft colors and minimal strain design. Comfortable for extended use.</p>
+                            </div>
+                        </div>
+
+                        <div class="why-item">
+                            <div class="why-icon">🎨</div>
+                            <div class="why-text">
+                                <h4>Customizable Themes</h4>
+                                <p>Choose from multiple beautiful themes. Light, dark, or eyecare.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preview Section -->
+        <section class="preview-section">
+            <div class="container">
+                <h2 class="section-title">See Flux in Action</h2>
+                <p class="section-subtitle">Explore the platform with these preview screenshots</p>
+                
+                <div class="preview-carousel">
+                    <div class="preview-track" id="previewTrack">
+                        <!-- Preview 1 -->
+                        <div class="preview-item">
+                            <div class="preview-image">
+                                <img src="assets/images/preview-1.jpg" alt="Chat Interface Preview" loading="lazy">
+                                <div class="preview-placeholder">
+                                    <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="300" height="400" fill="#f0fdf9"/>
+                                        <rect x="10" y="10" width="280" height="50" rx="8" fill="#a8d5c8" opacity="0.2"/>
+                                        <text x="150" y="40" font-family="Arial" font-size="16" text-anchor="middle" fill="#5bb3a8">Chat Preview</text>
+                                        <circle cx="30" cy="30" r="12" fill="#7cc4ba"/>
+                                        <rect x="10" y="80" width="280" height="50" rx="8" fill="#e0f7f2"/>
+                                        <rect x="10" y="140" width="280" height="50" rx="8" fill="#a8d5c8" opacity="0.2"/>
+                                        <rect x="10" y="200" width="280" height="50" rx="8" fill="#e0f7f2"/>
+                                        <rect x="10" y="260" width="280" height="50" rx="8" fill="#a8d5c8" opacity="0.2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="preview-title">Real-Time Messaging</h4>
+                        </div>
+
+                        <!-- Preview 2 -->
+                        <div class="preview-item">
+                            <div class="preview-image">
+                                <img src="assets/images/preview-2.jpg" alt="Timeline Preview" loading="lazy">
+                                <div class="preview-placeholder">
+                                    <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="300" height="400" fill="#f0fdf9"/>
+                                        <rect x="10" y="10" width="280" height="50" rx="8" fill="#a8d5c8" opacity="0.2"/>
+                                        <circle cx="30" cy="35" r="12" fill="#7cc4ba"/>
+                                        <rect x="10" y="70" width="280" height="120" rx="8" fill="#e0f7f2"/>
+                                        <rect x="10" y="200" width="280" height="100" rx="8" fill="#a8d5c8" opacity="0.2"/>
+                                        <rect x="10" y="310" width="280" height="80" rx="8" fill="#e0f7f2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="preview-title">Beautiful Timeline</h4>
+                        </div>
+
+                        <!-- Preview 3 -->
+                        <div class="preview-item">
+                            <div class="preview-image">
+                                <img src="assets/images/preview-3.jpg" alt="Status Preview" loading="lazy">
+                                <div class="preview-placeholder">
+                                    <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="300" height="400" fill="#f0fdf9"/>
+                                        <g>
+                                            <circle cx="50" cy="50" r="35" fill="none" stroke="#7cc4ba" stroke-width="3"/>
+                                            <circle cx="50" cy="50" r="30" fill="#e0f7f2"/>
+                                        </g>
+                                        <g>
+                                            <circle cx="150" cy="50" r="35" fill="none" stroke="#a8d5c8" stroke-width="2"/>
+                                            <circle cx="150" cy="50" r="30" fill="#f0fdf9"/>
+                                        </g>
+                                        <g>
+                                            <circle cx="250" cy="50" r="35" fill="none" stroke="#c8e6e0" stroke-width="2"/>
+                                            <circle cx="250" cy="50" r="30" fill="#f0fdf9"/>
+                                        </g>
+                                        <rect x="10" y="120" width="280" height="100" rx="8" fill="#e0f7f2"/>
+                                        <rect x="10" y="230" width="280" height="150" rx="8" fill="#f0fdf9" stroke="#a8d5c8" stroke-width="2"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="preview-title">Ephemeral Status</h4>
+                        </div>
+
+                        <!-- Preview 4 -->
+                        <div class="preview-item">
+                            <div class="preview-image">
+                                <img src="assets/images/preview-4.jpg" alt="Profile Preview" loading="lazy">
+                                <div class="preview-placeholder">
+                                    <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+                                        <rect width="300" height="400" fill="#f0fdf9"/>
+                                        <rect x="0" y="0" width="300" height="100" fill="#e0f7f2"/>
+                                        <circle cx="150" cy="50" r="40" fill="#7cc4ba"/>
+                                        <text x="150" y="160" font-family="Arial" font-size="18" text-anchor="middle" fill="#5bb3a8" font-weight="bold">John Doe</text>
+                                        <text x="150" y="185" font-family="Arial" font-size="12" text-anchor="middle" fill="#7cc4ba">@johndoe</text>
+                                        <rect x="20" y="210" width="260" height="60" rx="8" fill="#a8d5c8" opacity="0.2"/>
+                                        <text x="150" y="245" font-family="Arial" font-size="12" text-anchor="middle" fill="#5bb3a8">Posts • Following • Followers</text>
+                                    </svg>
+                                </div>
+                            </div>
+                            <h4 class="preview-title">Personalized Profile</h4>
+                        </div>
+                    </div>
+
+                    <!-- Navigation dots -->
+                    <div class="carousel-dots" id="carouselDots"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="final-cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Ready to Join Flux?</h2>
+                    <p>Start connecting with your community today. It only takes a few seconds.</p>
+                    <div class="cta-buttons">
+                        <a href="pages/register.html" class="btn btn-primary">Get Started</a>
+                        <a href="pages/login.html" class="btn btn-secondary">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h5 class="footer-title">Flux</h5>
+                    <p class="footer-text">Modern social communication platform.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h5 class="footer-title">Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h5 class="footer-title">Legal</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Flux. All rights reserved.</p>
+                <p>Built with 💙 by Zabdiel</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

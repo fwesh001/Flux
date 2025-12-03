@@ -1,0 +1,113 @@
+# Flux Project Tree Structure
+
+Flux/
+│
+├── frontend/
+│   ├── index.html
+│   │
+│   ├── pages/
+│   │   ├── login.html
+│   │   ├── register.html
+│   │   ├── chat.html
+│   │   ├── chatroom.html
+│   │   ├── timeline.html
+│   │   ├── create-post.html
+│   │   ├── profile.html
+│   │   ├── status.html
+│   │   └── view-status.html
+│   │
+│   ├── assets/
+│   │   ├── css/
+│   │   │   ├── base.css
+│   │   │   ├── layout.css
+│   │   │   ├── components.css
+│   │   │   └── themes.css
+│   │   ├── js/
+│   │   │   ├── main.js
+│   │   │   ├── auth.js
+│   │   │   ├── chat.js
+│   │   │   ├── posts.js
+│   │   │   ├── status.js
+│   │   │   ├── theme.js
+│   │   │   └── utils.js
+│   │   └── images/
+│   │
+│   └── components/
+│       ├── navbar.html
+│       ├── sidebar.html
+│       ├── message-bubble.html
+│       ├── post-card.html
+│       └── status-bubble.html
+│
+├── backend/
+│   ├── app.py
+│   │
+│   ├── config/
+│   │   ├── settings.py
+│   │   └── database.py
+│   │
+│   ├── database/
+│   │   ├── connection.py
+│   │   └── migrations.py
+│   │
+│   ├── utils/
+│   │   ├── helpers.py
+│   │   ├── decorators.py
+│   │   └── errors.py
+│   │
+│   ├── websocket/
+│   │   ├── socket_server.py
+│   │   ├── events.py
+│   │   └── handlers.py
+│   │
+│   ├── uploads/
+│   │   └── [uploaded files stored here]
+│   │
+│   └── modules/
+│       ├── auth/
+│       │   ├── controller.py
+│       │   ├── service.py
+│       │   ├── model.py
+│       │   ├── routes.py
+│       │   └── validations.py
+│       │
+│       ├── users/
+│       │   ├── controller.py
+│       │   ├── service.py
+│       │   ├── model.py
+│       │   ├── routes.py
+│       │   └── validations.py
+│       │
+│       ├── posts/
+│       │   ├── controller.py
+│       │   ├── service.py
+│       │   ├── model.py
+│       │   ├── routes.py
+│       │   └── validations.py
+│       │
+│       ├── chats/
+│       │   ├── controller.py
+│       │   ├── service.py
+│       │   ├── model.py
+│       │   ├── routes.py
+│       │   └── validations.py
+│       │
+│       ├── status/
+│       │   ├── controller.py
+│       │   ├── service.py
+│       │   ├── model.py
+│       │   ├── routes.py
+│       │   └── validations.py
+│       │
+│       └── uploads/
+│           ├── controller.py
+│           ├── service.py
+│           ├── model.py
+│           ├── routes.py
+│           └── validations.py
+│
+├── .env.example
+├── README.md
+├── requirements.txt (Backend dependencies)
+├── package.json (Frontend dependencies - if using bundlers)
+└── .gitignore

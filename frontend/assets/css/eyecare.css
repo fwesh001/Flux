@@ -1,0 +1,388 @@
+/* ============================================
+   EYECARE.CSS - Eyecare Theme (Default)
+   ============================================ */
+
+/* This theme uses soft, soothing colors designed to reduce eye strain
+   and create a comfortable viewing experience for extended use. */
+
+:root {
+    /* Primary Color Palette - Warm Gold & Brown (Luxury + Eyecare) */
+    --color-primary: #F6C851;
+    --color-primary-light: #FFD670;
+    --color-primary-lighter: #FFF4D9;
+    --color-primary-lightest: #FFFAEF;
+    
+    /* Secondary Color - Rich Brown (Trust & Grounding) */
+    --color-secondary: #7A5230;
+    --color-secondary-light: #9A7250;
+    --color-secondary-dark: #5A3E2B;
+    
+    /* Background Colors - Warm Neutral Eyecare Base */
+    --color-bg: #fff7e2;
+    --color-bg-secondary: #FAF8F3;
+    --color-bg-tertiary: #F5F2EA;
+    
+    /* Text Colors - Deep Coffee & Natural Tones */
+    --color-text: #3B2F2F;
+    --color-text-secondary: #6B5B58;
+    --color-text-tertiary: #8B7B78;
+    
+    /* Border Colors */
+    --color-border: #E8DED3;
+    --color-border-light: #F0E9E0;
+    
+    /* Status Colors */
+    --color-success: #4caf50;
+    --color-warning: #ff9800;
+    --color-error: #f44336;
+    --color-info: #F6C851;
+}
+
+/* ============================================
+   Eyecare-Specific Styles
+   ============================================ */
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+/* Soft shadows that don't create harsh contrast */
+.card,
+.feature-card,
+.btn-primary {
+    box-shadow: 0 2px 8px rgba(91, 179, 168, 0.15),
+                0 4px 12px rgba(26, 58, 54, 0.08);
+}
+
+/* Smooth transitions for eye comfort */
+* {
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   Gradient Backgrounds
+   ============================================ */
+
+.why-flux {
+    background: linear-gradient(
+        135deg,
+        #FFF4D9 0%,
+        #F9F6EE 50%,
+        #FAF8F3 100%
+    );
+}
+
+.final-cta {
+    background: linear-gradient(
+        135deg,
+        #F6C851 0%,
+        #FFD670 100%
+    );
+    color: #3B2F2F;
+}
+
+.final-cta h2 {
+    color: #3B2F2F;
+}
+
+.final-cta p {
+    color: rgba(59, 47, 47, 0.9);
+}
+
+/* ============================================
+   Focus and Hover States
+   ============================================ */
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+a:not(.btn):hover {
+    color: var(--color-primary-light);
+}
+
+/* ============================================
+   Scrollbar Styling
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-primary-lighter);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-light);
+}
+
+/* ============================================
+   Feature Card Hover Effect
+   ============================================ */
+
+.feature-card {
+    border: 1px solid var(--color-border-light);
+    background-color: var(--color-bg);
+}
+
+.feature-card:hover {
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-primary-lighter);
+}
+
+/* ============================================
+   Button Styling
+   ============================================ */
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-light);
+    box-shadow: 0 4px 12px rgba(91, 179, 168, 0.3),
+                0 8px 16px rgba(91, 179, 168, 0.15);
+}
+
+.btn-secondary {
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary-lighter);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-primary-lightest);
+    border-color: var(--color-primary-light);
+}
+
+/* ============================================
+   Text Selection
+   ============================================ */
+
+::selection {
+    background-color: var(--color-primary-lighter);
+    color: var(--color-text);
+}
+
+::-moz-selection {
+    background-color: var(--color-primary-lighter);
+    color: var(--color-text);
+}
+
+/* ============================================
+   Input Styling
+   ============================================ */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(91, 179, 168, 0.1);
+    background-color: var(--color-bg-secondary);
+}
+
+/* ============================================
+   Badge Styling
+   ============================================ */
+
+.badge-primary {
+    background-color: var(--color-primary-lightest);
+    color: var(--color-primary);
+}
+
+/* ============================================
+   Header Styling
+   ============================================ */
+
+.header {
+    background-color: rgba(254, 253, 251, 0.8);
+    border-bottom: 1px solid var(--color-border-light);
+    backdrop-filter: blur(10px);
+}
+
+body.dark-theme .header {
+    background-color: rgba(26, 58, 54, 0.8);
+    border-bottom-color: rgba(91, 179, 168, 0.2);
+}
+
+/* ============================================
+   Logo Styling
+   ============================================ */
+
+.logo-text {
+    color: var(--color-primary);
+    text-shadow: 0 2px 4px rgba(91, 179, 168, 0.1);
+}
+
+/* ============================================
+   Theme Toggle Button
+   ============================================ */
+
+.theme-toggle {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border-light);
+    color: var(--color-primary);
+}
+
+.theme-toggle:hover {
+    background-color: var(--color-primary-lightest);
+    border-color: var(--color-primary-lighter);
+}
+
+/* ============================================
+   Footer Styling
+   ============================================ */
+
+.footer {
+    background-color: var(--color-bg-secondary);
+    border-top: 1px solid var(--color-border-light);
+}
+
+.footer-bottom {
+    color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   Animation Enhancements
+   ============================================ */
+
+@keyframes gentlePulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.pulse {
+    animation: gentlePulse 3s ease-in-out infinite;
+}
+
+/* ============================================
+   Accessibility & Contrast
+   ============================================ */
+
+/* Ensure sufficient contrast ratios */
+body {
+    color: var(--color-text);
+}
+
+p, span, li {
+    color: var(--color-text-secondary);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text);
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+
+@media print {
+    body {
+        background-color: white;
+    }
+
+    .theme-toggle,
+    .header {
+        display: none;
+    }
+}
+
+/* ============================================
+   High Contrast Mode Support
+   ============================================ */
+
+@media (prefers-contrast: more) {
+    :root {
+        --color-primary: #00998a;
+        --color-text: #000000;
+    }
+}
+
+/* ============================================
+   Reduced Motion Support
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ============================================
+   Dark Mode Overrides
+   ============================================ */
+
+body.dark-theme {
+    --color-primary: #4da89f;
+    --color-primary-light: #5bb3a8;
+    --color-primary-lighter: #7cc4ba;
+    --color-primary-lightest: #a8d5c8;
+    
+    --color-bg: #0f1419;
+    --color-bg-secondary: #1a2530;
+    --color-bg-tertiary: #253541;
+    
+    --color-text: #e8e8e8;
+    --color-text-secondary: #b3b3b3;
+    --color-text-tertiary: #7f7f7f;
+    
+    --color-border: #2a3f5a;
+    --color-border-light: #3a4f6a;
+}
+
+body.dark-theme .card,
+body.dark-theme .feature-card {
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-border);
+}
+
+body.dark-theme .feature-card:hover {
+    background-color: var(--color-bg-tertiary);
+}
+
+body.dark-theme .why-flux {
+    background: linear-gradient(
+        135deg,
+        #253541 0%,
+        #1a2530 50%,
+        #0f1419 100%
+    );
+}
+
+body.dark-theme .final-cta {
+    background: linear-gradient(
+        135deg,
+        #4da89f 0%,
+        #5bb3a8 100%
+    );
+}
