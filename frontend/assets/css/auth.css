@@ -867,3 +867,21 @@ body.high-contrast-theme .checkbox-input:focus {
 @media (prefers-reduced-motion: reduce) {
     #loginWelcome { animation: none; transform: none; }
 }
+
+/* Center social buttons for single-button layout (login) */
+.auth-form .social-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+    margin: 1rem 0 var(--spacing-xl);
+}
+
+.auth-form .social-buttons .btn-social {
+    min-width: 220px;
+    max-width: 320px;
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .auth-form .social-buttons .btn-social { min-width: 100%; }
+}
