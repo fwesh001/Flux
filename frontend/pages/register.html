@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Flux - Create your account and join our eyecare-friendly social platform.">
+    <meta name="theme-color" content="#e8f5f0">
+    <title>Register - Flux</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/layout.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/eyecare.css">
+    <link rel="stylesheet" href="../assets/css/auth.css">
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-content">
+                    <a href="../index.html" class="logo">
+                        <span class="logo-text">Flux</span>
+                    </a>
+                    
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="auth-main">
+        <!-- Auth Container -->
+        <div class="auth-container">
+            <!-- Left Section - Hero -->
+            <section class="auth-hero">
+                <div class="auth-hero-content">
+                    <h1 class="auth-hero-title">Join Flux Today</h1>
+                    <p class="auth-hero-description">
+                        Create your account and join a modern, eyecare-friendly social platform. Share moments, chat with friends, and stay connected.
+                    </p>
+                    
+                    <!-- Hero Illustration -->
+                    <div class="auth-illustration">
+                        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Background Circle -->
+                            <circle cx="150" cy="150" r="140" fill="var(--color-primary-lighter)" opacity="0.3"/>
+                            
+                            <!-- Signup Icon (Person + Plus) -->
+                            <g transform="translate(110, 90)">
+                                <!-- Person Circle -->
+                                <circle cx="40" cy="25" r="15" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                                
+                                <!-- Person Body -->
+                                <path d="M 30 45 Q 30 42 40 42 Q 50 42 50 45 L 50 65 Q 50 70 40 70 Q 30 70 30 65 Z" 
+                                      fill="none" stroke="var(--color-primary)" stroke-width="3"/>
+                                
+                                <!-- Plus Sign -->
+                                <g opacity="0.7">
+                                    <line x1="70" y1="25" x2="90" y2="25" stroke="var(--color-primary)" stroke-width="3" stroke-linecap="round"/>
+                                    <line x1="80" y1="15" x2="80" y2="35" stroke="var(--color-primary)" stroke-width="3" stroke-linecap="round"/>
+                                </g>
+                            </g>
+                            
+                            <!-- Decorative Elements -->
+                            <circle cx="60" cy="240" r="10" fill="var(--color-primary)" opacity="0.4"/>
+                            <circle cx="240" cy="80" r="8" fill="var(--color-primary)" opacity="0.3"/>
+                            <path d="M 220 250 L 235 265" stroke="var(--color-primary)" stroke-width="3" opacity="0.3"/>
+                        </svg>
+                    </div>
+
+                    <!-- Bottom CTA Link -->
+                    <div class="auth-footer-link">
+                        <p>Already have an account? <a href="login.html" class="link-accent">Sign in here</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Section - Form -->
+            <section class="auth-form-section">
+                <form class="auth-form" id="registerForm" name="registerForm">
+                    <h2 class="form-title">Create Account</h2>
+                    
+                    <!-- Full Name Field -->
+                    <div class="form-group">
+                        <label for="fullName" class="form-label">Full Name *</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="fullName" 
+                                name="fullName" 
+                                class="form-input"
+                                placeholder="John Doe"
+                                required
+                                aria-label="Full Name"
+                                aria-required="true"
+                            >
+                            <span class="input-icon">👤</span>
+                        </div>
+                        <div class="form-error" id="fullNameError"></div>
+                    </div>
+
+                    <!-- Username Field -->
+                    <div class="form-group">
+                        <label for="username" class="form-label">Username *</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username" 
+                                class="form-input"
+                                placeholder="johndoe"
+                                required
+                                aria-label="Username"
+                                aria-required="true"
+                                minlength="3"
+                                maxlength="30"
+                            >
+                            <span class="input-icon" id="usernameStatus">📝</span>
+                        </div>
+                        <div class="form-error" id="usernameError"></div>
+                        <div class="form-help" id="usernameHelp">3-30 characters, letters and numbers only</div>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-group">
+                        <label for="registerEmail" class="form-label">Email Address *</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="email" 
+                                id="registerEmail" 
+                                name="email" 
+                                class="form-input"
+                                placeholder="john@example.com"
+                                required
+                                aria-label="Email Address"
+                                aria-required="true"
+                            >
+                            <span class="input-icon">✉️</span>
+                        </div>
+                        <div class="form-error" id="emailError"></div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label for="registerPassword" class="form-label">Password *</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="registerPassword" 
+                                name="password" 
+                                class="form-input"
+                                placeholder="Create a strong password"
+                                required
+                                aria-label="Password"
+                                aria-required="true"
+                                minlength="8"
+                            >
+                            <button 
+                                type="button" 
+                                class="input-icon-btn" 
+                                id="togglePassword" 
+                                aria-label="Toggle password visibility"
+                                aria-pressed="false"
+                            >
+                                👁️
+                            </button>
+                        </div>
+                        <div class="form-error" id="passwordError"></div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">Password strength: Too weak</div>
+                        </div>
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="confirmPassword" 
+                                name="confirmPassword" 
+                                class="form-input"
+                                placeholder="Confirm your password"
+                                required
+                                aria-label="Confirm Password"
+                                aria-required="true"
+                            >
+                            <span class="input-icon" id="confirmStatus">🔒</span>
+                        </div>
+                        <div class="form-error" id="confirmError"></div>
+                    </div>
+
+                    <!-- Terms & Privacy Checkbox -->
+                    <div class="form-checkbox">
+                        <input 
+                            type="checkbox" 
+                            id="agreeTerms" 
+                            name="agreeTerms"
+                            class="checkbox-input"
+                            required
+                            aria-required="true"
+                        >
+                        <label for="agreeTerms" class="checkbox-label">
+                            I agree to the <a href="#" class="link-accent">Terms of Service</a> and <a href="#" class="link-accent">Privacy Policy</a> *
+                        </label>
+                    </div>
+                    <div class="form-error" id="termsError"></div>
+
+                    <!-- Form Errors (General) -->
+                    <div class="alert alert-error" id="formError" style="display: none;"></div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loader"></span>
+                    </button>
+
+                    <!-- Social Signup Divider -->
+                    <div class="auth-divider">
+                        <span>Or sign up with</span>
+                    </div>
+
+                    <!-- Social Signup Buttons -->
+                    <div class="social-buttons">
+                        <button type="button" class="btn-social" title="Sign up with Google" aria-label="Sign up with Google">
+                            <span class="social-icon">G</span>
+                        </button>
+                        <button type="button" class="btn-social" title="Sign up with GitHub" aria-label="Sign up with GitHub">
+                            <span class="social-icon">⚙️</span>
+                        </button>
+                        <button type="button" class="btn-social" title="Sign up with Apple" aria-label="Sign up with Apple">
+                            <span class="social-icon">🍎</span>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Additional Info -->
+                <div class="auth-info">
+                    <p class="auth-info-text">
+                        By creating an account, you agree to our <a href="#" class="link-accent">Terms</a> and <a href="#" class="link-accent">Privacy Policy</a>
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Flux</h4>
+                    <p>A modern, eyecare-friendly social platform.</p>
+                </div>
+                <div class="footer-section">
+                    <h5>Product</h5>
+                    <ul>
+                        <li><a href="../index.html">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Company</h5>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h5>Legal</h5>
+                    <ul>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Flux. Built with 💙 by Zabdiel</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/auth.js"></script>
+</body>
+</html>
