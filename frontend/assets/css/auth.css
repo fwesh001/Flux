@@ -18,7 +18,7 @@
 
 .auth-container {
     display: grid;
-    grid-template-columns: 320px 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 0;
     width: 100%;
     align-items: stretch;
@@ -32,8 +32,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    padding: 40px 24px;
+    gap: 50px;
+    /* remove internal padding so the image can fill the full area */
+    padding: 0;
     background: linear-gradient(
         135deg,
         var(--color-primary-lightest) 0%,
@@ -44,25 +45,27 @@
     /* Keep aside fixed but avoid internal scrolling so the image doesn't scroll independently */
     overflow: hidden;
     align-content: center;
+    /* make the left aside occupy the full viewport height so the image appears full-screen on the left */
+    height: 100vh;
 }
 
 .auth-illustration {
     width: 100%;
-    height: 280px;
-    border-radius: 12px;
+    height: 100vh; /* fill the full aside height */
+    border-radius: 0; /* remove rounding so it fills edge-to-edge */
     overflow: hidden;
-    background-color: white;
-    box-shadow: 0 12px 30px rgba(246, 200, 81, 0.15);
-    border: 6px solid rgba(246, 200, 81, 0.08);
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
     animation: fadeInLeft 0.9s ease both;
     flex-shrink: 0;
 }
 
 .auth-image {
     width: 100%;
-    height: 100%;
+    height: 100vh; /* ensure image covers full aside height */
     object-fit: cover;
-    object-position: center;
+    object-position: center center;
 }
 
 /* Small helper for form-level note links (login <-> register) */
@@ -601,7 +604,7 @@
 @media (max-width: 1199px) {
     /* Keep the two-column layout on tablet sizes so the illustration remains visible */
     .auth-container {
-        grid-template-columns: 320px 1fr;
+        grid-template-columns: 1fr 1fr;
     }
 
     /* Show the aside on tablet; it will still be hidden on small mobile below 768px */
