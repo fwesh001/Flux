@@ -121,6 +121,15 @@
 .header-menu .menu-item { display:block; width:100%; text-align:left; padding:0.6rem 1rem; background:transparent; border:0; color:var(--color-text); }
 .header-menu .menu-item:hover, .header-menu .menu-item:focus { background:var(--color-bg-secondary); }
 
+/* Font Awesome icon spacing in header menu */
+.header-menu .menu-item i {
+    width: 18px;
+    display: inline-block;
+    text-align: center;
+    margin-right: 0.6rem;
+    color: var(--color-primary);
+}
+
 /* Make sure header is positioned to allow absolute menu */
 .header { position: sticky; top:0; z-index:1100; }
 
