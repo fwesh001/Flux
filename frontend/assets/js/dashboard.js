@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded', function(){
         document.documentElement.classList.add('theme-' + (name || 'eyecare'));
     }
 
+    // Ensure global ThemeManager (from theme.js) is synchronized with this page
+    if(window.themeManager && typeof window.themeManager.updateThemeToggleIcon === 'function'){
+        // Update the header theme button icon to match current theme
+        window.themeManager.updateThemeToggleIcon();
+    }
+
     // Collapse behavior: toggle compact sidebar
     if(collapseBtn && sidebar){
         collapseBtn.addEventListener('click', ()=>{

@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/eyecare.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
 </head>
 <body>
     <!-- Header / Navigation (exact same structure as project) -->
@@ -19,8 +21,7 @@
                         <span class="logo-text">Flux</span>
                     </div>
                     
-                    <button id="sidebarToggle" class="btn-icon" aria-label="Toggle sidebar" aria-expanded="false">☰</button>
-                    <button id="headerMenuBtn" class="btn-icon" aria-haspopup="true" aria-expanded="false" aria-controls="headerMenu" title="Menu">⋯</button>
+                    <button id="headerMenuBtn" class="btn-icon" aria-haspopup="true" aria-expanded="false" aria-controls="headerMenu" title="Menu">☰</button>
                     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
                         <span class="theme-icon">🌙</span>
                     </button>
@@ -39,74 +40,6 @@
         <button class="menu-item" role="menuitem">⎋ Logout</button>
     </div>
 
-    <main class="container">
-        <div class="app-shell">
-            <!-- Sidebar (left) -->
-            <aside class="sidebar" id="sidebar">
-                <div class="profile">
-                    <div class="avatar-wrap">
-                        <img src="assets/images/login.png" alt="You" class="avatar-img">
-                    </div>
-                    <div class="profile-name">Your Name<br><small class="muted">@username</small></div>
-                </div>
-
-                <!-- side-nav removed (moved to header menu) -->
-
-            </aside>
-
-            <!-- Main content (right) -->
-            <section class="feed">
-                <div class="stats-grid">
-                    <div class="stat card">
-                        <h3>Users</h3>
-                        <p>1,245</p>
-                    </div>
-                    <div class="stat card">
-                        <h3>Posts</h3>
-                        <p>3,482</p>
-                    </div>
-                    <div class="stat card">
-                        <h3>Views</h3>
-                        <p>48,123</p>
-                    </div>
-                    <div class="stat card">
-                        <h3>Notifications</h3>
-                        <p>12</p>
-                    </div>
-                </div>
-
-                <div class="main-widgets">
-                    <div>
-                        <div class="card">
-                            <h4>Recent Activity</h4>
-                            <ul class="recent-activity">
-                                <li><strong>Ana</strong> liked your post <div class="time">2h ago</div></li>
-                                <li><strong>Mark</strong> commented on a post <div class="time">5h ago</div></li>
-                                <li><strong>Lia</strong> started following you <div class="time">1d ago</div></li>
-                                <li><strong>Jared</strong> shared a photo <div class="time">2d ago</div></li>
-                            </ul>
-                        </div>
-
-                        <div class="card" style="margin-top:1rem;">
-                            <h4>Quick Composer</h4>
-                            <textarea id="composer" rows="3" placeholder="Share an update..."></textarea>
-                            <div style="margin-top:0.5rem; text-align:right;"><button id="postBtn" class="btn btn-primary">Post</button></div>
-                        </div>
-                    </div>
-
-                    <aside>
-                        <div class="card chart-placeholder">
-                            Chart placeholder
-                        </div>
-                        <div class="card" style="margin-top:1rem;">
-                            <h4>Mini Widgets</h4>
-                            <p class="muted">Small summaries or sponsored content can go here.</p>
-                        </div>
-                    </aside>
-                </div>
-            </section>
-        </div>
-    </main>
 
     <script src="assets/js/theme.js"></script>
     <script src="assets/js/main.js"></script>

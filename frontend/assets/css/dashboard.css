@@ -84,6 +84,25 @@
 
 /* Keep header styles untouched; dashboard uses the project's header */
 
+/* Dashboard-specific header alignment: place logo left, controls far right */
+.navbar .container .navbar-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.navbar .container .navbar-content .logo {
+    margin-right: auto; /* push other controls to the far right */
+}
+
+.navbar .container .navbar-content .theme-toggle,
+.navbar .container .navbar-content .btn-icon,
+.navbar .container .navbar-content #sidebarToggle,
+.navbar .container .navbar-content #headerMenuBtn {
+    margin-left: 0.35rem;
+}
+
+
 /* Header menu (top-right) */
 .header-menu {
     position: absolute;
