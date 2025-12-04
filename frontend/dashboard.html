@@ -4,123 +4,112 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#BEEDE6">
-    <title>Flux — Home</title>
+    <title>Flux — Dashboard</title>
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/eyecare.css">
     <link rel="stylesheet" href="assets/css/dashboard.css">
 </head>
-<body class="dashboard-body">
-    <div class="app-shell">
-        <!-- LEFT SIDEBAR -->
-        <aside class="sidebar" id="sidebar">
-            <div class="profile">
-                <div class="avatar-wrap">
-                    <img src="assets/images/login.png" alt="Zabdiel" class="avatar-img">
-                    <span class="online-dot" title="Online"></span>
-                </div>
-                <div class="profile-name">Zabdiel<br><small class="muted">@zabdiel</small></div>
-            </div>
-
-            <nav class="side-nav">
-                <button class="side-link active" data-key="timeline"><span class="icon">🏠</span><span>Timeline</span></button>
-                <button class="side-link" data-key="chats"><span class="icon">💬</span><span>Chats</span></button>
-                <button class="side-link" data-key="create"><span class="icon">📝</span><span>Create Post</span></button>
-                <button class="side-link" data-key="status"><span class="icon">🏷</span><span>Status</span></button>
-                <button class="side-link" data-key="notif"><span class="icon">🔔</span><span>Notifications</span></button>
-                <button class="side-link" data-key="settings"><span class="icon">⚙</span><span>Settings</span></button>
-            </nav>
-
-            <div class="sidebar-bottom">
-                <div class="theme-toggle-group">
-                    <label class="theme-btn"><input type="radio" name="theme" value="eyecare" checked> Eyecare</label>
-                    <label class="theme-btn"><input type="radio" name="theme" value="light"> Light</label>
-                    <label class="theme-btn"><input type="radio" name="theme" value="dark"> Dark</label>
-                </div>
-                <button id="collapseBtn" class="collapse-btn" aria-label="Collapse sidebar">⤺</button>
-            </div>
-        </aside>
-
-        <!-- MIDDLE FEED -->
-        <main class="feed">
-            <header class="feed-top">
-                <div class="stories">
-                    <div class="story"> <img src="assets/images/login.png" alt="Ana"><span>Ana</span></div>
-                    <div class="story"> <img src="assets/images/login.png" alt="Mark"><span>Mark</span></div>
-                    <div class="story"> <img src="assets/images/login.png" alt="Jared"><span>Jared</span></div>
-                    <div class="story"> <img src="assets/images/login.png" alt="You"><span>You</span></div>
-                    <div class="story"> <img src="assets/images/login.png" alt="Lia"><span>Lia</span></div>
-                </div>
-
-                <div class="composer card">
-                    <textarea id="composer" placeholder="What's on your mind, Zabdiel?" rows="1"></textarea>
-                    <div class="composer-actions">
-                        <button class="btn btn-primary small" id="postBtn">Post</button>
-                        <div class="icons"><button class="icon-btn">📷</button><button class="icon-btn">🎞️</button></div>
+<body>
+    <!-- Header / Navigation (exact same structure as project) -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-content">
+                    <div class="logo">
+                        <span class="logo-text">Flux</span>
                     </div>
+                    
+                    <button id="sidebarToggle" class="btn-icon" aria-label="Toggle sidebar" aria-expanded="false">☰</button>
+                    <button id="headerMenuBtn" class="btn-icon" aria-haspopup="true" aria-expanded="false" aria-controls="headerMenu" title="Menu">⋯</button>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <span class="theme-icon">🌙</span>
+                    </button>
                 </div>
-            </header>
-
-            <section id="posts" class="posts">
-                <!-- sample post -->
-                <article class="post card fade-in">
-                    <div class="post-header"><img src="assets/images/login.png" alt="Ana" class="post-avatar"><div><strong>Ana</strong><div class="muted small">2h • Public</div></div></div>
-                    <div class="post-body">Loved the new Flux update — the eyecare theme feels relaxing. Here's a photo from my walk.</div>
-                    <div class="post-media"><img src="assets/images/preview-1.jpg" alt="walk"></div>
-                    <div class="post-actions"><button class="btn-link">Like</button><button class="btn-link">Comment</button><button class="btn-link">Share</button></div>
-                </article>
-
-                <article class="post card fade-in">
-                    <div class="post-header"><img src="assets/images/login.png" alt="Mark" class="post-avatar"><div><strong>Mark</strong><div class="muted small">5h • Friends</div></div></div>
-                    <div class="post-body">Quick tip: keep your designs simple and accessible.</div>
-                    <div class="post-actions"><button class="btn-link">Like</button><button class="btn-link">Comment</button><button class="btn-link">Share</button></div>
-                </article>
-
-                <div id="loading" class="loading muted">Loading more posts...</div>
-            </section>
-        </main>
-
-        <!-- RIGHT SIDEBAR -->
-        <aside class="widgets">
-            <div class="widget card">
-                <h4>Your Stats Today</h4>
-                <div class="stats-mini"><div><strong>Posts</strong><div>3</div></div><div><strong>Messages</strong><div>12</div></div><div><strong>Followers</strong><div>8</div></div></div>
             </div>
+        </nav>
+    </header>
 
-            <div class="widget card">
-                <h4>Suggested Friends</h4>
-                <ul class="suggest-list">
-                    <li><img src="assets/images/login.png" alt="Lia"><div><strong>Lia</strong><button class="btn small">Add</button></div></li>
-                    <li><img src="assets/images/login.png" alt="Jared"><div><strong>Jared</strong><button class="btn small">Add</button></div></li>
-                </ul>
-            </div>
-
-            <div class="widget card">
-                <h4>Trending Topics</h4>
-                <ul class="trend-list"><li>#eyecare</li><li>#design</li><li>#flux</li></ul>
-            </div>
-
-            <div class="widget card">
-                <h4>Birthdays</h4>
-                <p class="muted">No birthdays today</p>
-            </div>
-
-            <div class="widget card ads">
-                <h4>Sponsored</h4>
-                <div class="ad-slot muted">Ad space (future)</div>
-            </div>
-        </aside>
+    <!-- Header menu (top-right) -->
+    <div id="headerMenu" class="header-menu" role="menu" aria-hidden="true">
+        <button class="menu-item" role="menuitem">📊 Overview</button>
+        <button class="menu-item" role="menuitem">👤 Profile</button>
+        <button class="menu-item" role="menuitem">💬 Messages</button>
+        <button class="menu-item" role="menuitem">🔔 Notifications</button>
+        <button class="menu-item" role="menuitem">⚙ Settings</button>
+        <button class="menu-item" role="menuitem">⎋ Logout</button>
     </div>
 
-    <!-- Chat preview drawer -->
-    <aside id="chatPreview" class="chat-preview">
-        <h4>Chats</h4>
-        <ul>
-            <li><img src="assets/images/login.png" alt="Ana"><div><strong>Ana</strong><div class="muted small">Hey — are you free?</div></div><span class="unread">2</span></li>
-            <li><img src="assets/images/login.png" alt="Mark"><div><strong>Mark</strong><div class="muted small">Sent a file</div></div></li>
-            <li><img src="assets/images/login.png" alt="Jared"><div><strong>Jared</strong><div class="muted small">Typing…</div></div><span class="typing">●●●</span></li>
-        </ul>
-    </aside>
+    <main class="container">
+        <div class="app-shell">
+            <!-- Sidebar (left) -->
+            <aside class="sidebar" id="sidebar">
+                <div class="profile">
+                    <div class="avatar-wrap">
+                        <img src="assets/images/login.png" alt="You" class="avatar-img">
+                    </div>
+                    <div class="profile-name">Your Name<br><small class="muted">@username</small></div>
+                </div>
 
+                <!-- side-nav removed (moved to header menu) -->
+
+            </aside>
+
+            <!-- Main content (right) -->
+            <section class="feed">
+                <div class="stats-grid">
+                    <div class="stat card">
+                        <h3>Users</h3>
+                        <p>1,245</p>
+                    </div>
+                    <div class="stat card">
+                        <h3>Posts</h3>
+                        <p>3,482</p>
+                    </div>
+                    <div class="stat card">
+                        <h3>Views</h3>
+                        <p>48,123</p>
+                    </div>
+                    <div class="stat card">
+                        <h3>Notifications</h3>
+                        <p>12</p>
+                    </div>
+                </div>
+
+                <div class="main-widgets">
+                    <div>
+                        <div class="card">
+                            <h4>Recent Activity</h4>
+                            <ul class="recent-activity">
+                                <li><strong>Ana</strong> liked your post <div class="time">2h ago</div></li>
+                                <li><strong>Mark</strong> commented on a post <div class="time">5h ago</div></li>
+                                <li><strong>Lia</strong> started following you <div class="time">1d ago</div></li>
+                                <li><strong>Jared</strong> shared a photo <div class="time">2d ago</div></li>
+                            </ul>
+                        </div>
+
+                        <div class="card" style="margin-top:1rem;">
+                            <h4>Quick Composer</h4>
+                            <textarea id="composer" rows="3" placeholder="Share an update..."></textarea>
+                            <div style="margin-top:0.5rem; text-align:right;"><button id="postBtn" class="btn btn-primary">Post</button></div>
+                        </div>
+                    </div>
+
+                    <aside>
+                        <div class="card chart-placeholder">
+                            Chart placeholder
+                        </div>
+                        <div class="card" style="margin-top:1rem;">
+                            <h4>Mini Widgets</h4>
+                            <p class="muted">Small summaries or sponsored content can go here.</p>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/main.js"></script>
     <script src="assets/js/dashboard.js"></script>
 </body>
 </html>

@@ -2,48 +2,96 @@ document.addEventListener('DOMContentLoaded', function(){
     // Elements
     const sidebar = document.getElementById('sidebar');
     const collapseBtn = document.getElementById('collapseBtn');
-    const themeRadios = document.querySelectorAll('input[name="theme"]');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const closeSidebar = document.getElementById('closeSidebar');
     const postsEl = document.getElementById('posts');
     const loading = document.getElementById('loading');
-    const chatPreview = document.getElementById('chatPreview');
+    const composer = document.getElementById('composer');
+    const postBtn = document.getElementById('postBtn');
 
-    // Collapse sidebar
-    if(collapseBtn){
-        collapseBtn.addEventListener('click', ()=>{
-            if(sidebar.style.width === '64px'){
-                sidebar.style.width = '';
-                sidebar.querySelectorAll('span').forEach(s=>s.style.display='');
-            } else {
-                sidebar.style.width = '64px';
-                sidebar.querySelectorAll('span').forEach(s=>s.style.display='none');
-            }
-        });
-    }
-
-    // Theme switching (eyecare, light, dark)
-    themeRadios.forEach(r=>r.addEventListener('change', e=>applyTheme(e.target.value)));
+    // helper to apply theme classes (used by radios elsewhere)
     function applyTheme(name){
         document.documentElement.classList.remove('theme-eyecare','theme-light','theme-dark');
         document.documentElement.classList.add('theme-' + (name || 'eyecare'));
     }
 
-    // Simple infinite scroll: append placeholder posts when near bottom
+    // Collapse behavior: toggle compact sidebar
+    if(collapseBtn && sidebar){
+        collapseBtn.addEventListener('click', ()=>{
+            sidebar.classList.toggle('collapsed');
+        });
+    }
+
+    // Header hamburger: on small screens toggle `.open` to show sidebar
+    if(sidebarToggle && sidebar){
+        sidebarToggle.setAttribute('aria-expanded', 'false');
+        sidebarToggle.addEventListener('click', ()=>{
+            const isOpen = sidebar.classList.toggle('open');
+            sidebarToggle.setAttribute('aria-expanded', String(isOpen));
+            if(isOpen) sidebar.classList.remove('hidden');
+        });
+    }
+
+    // Header menu (top-right) toggle
+    const headerMenuBtn = document.getElementById('headerMenuBtn');
+    const headerMenu = document.getElementById('headerMenu');
+    if(headerMenuBtn && headerMenu){
+        headerMenuBtn.addEventListener('click', (e)=>{
+            const isOpen = headerMenu.classList.toggle('open');
+            headerMenuBtn.setAttribute('aria-expanded', String(isOpen));
+            headerMenu.setAttribute('aria-hidden', String(!isOpen));
+        });
+
+        // close on outside click
+        document.addEventListener('click', (e)=>{
+            if(!headerMenu.contains(e.target) && !headerMenuBtn.contains(e.target)){
+                if(headerMenu.classList.contains('open')){
+                    headerMenu.classList.remove('open');
+                    headerMenuBtn.setAttribute('aria-expanded','false');
+                    headerMenu.setAttribute('aria-hidden','true');
+                }
+            }
+        });
+
+        // close on Esc
+        document.addEventListener('keydown', (e)=>{
+            if(e.key === 'Escape'){
+                if(headerMenu.classList.contains('open')){
+                    headerMenu.classList.remove('open');
+                    headerMenuBtn.setAttribute('aria-expanded','false');
+                    headerMenu.setAttribute('aria-hidden','true');
+                }
+            }
+        });
+    }
+
+    // Close button inside sidebar
+    if(closeSidebar && sidebar){
+        closeSidebar.addEventListener('click', ()=>{
+            sidebar.classList.remove('open');
+            sidebar.classList.add('hidden');
+            if(sidebarToggle) sidebarToggle.setAttribute('aria-expanded', 'false');
+        });
+    }
+
+    // Infinite scroll placeholder
     let loadingPosts = false;
     window.addEventListener('scroll', ()=>{
         if(loadingPosts) return;
         const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 240;
         if(nearBottom){
             loadingPosts = true;
-            loading.style.display = 'block';
+            if(loading) loading.style.display = 'block';
             setTimeout(()=>{
                 appendDummyPost();
-                loading.style.display = 'none';
+                if(loading) loading.style.display = 'none';
                 loadingPosts = false;
-            }, 900);
+            }, 800);
         }
     });
 
     function appendDummyPost(){
+        if(!postsEl) return;
         const a = document.createElement('article');
         a.className = 'post card fade-in';
         a.innerHTML = `
@@ -54,13 +102,11 @@ document.addEventListener('DOMContentLoaded', function(){
         postsEl.appendChild(a);
     }
 
-    // Composer quick actions
-    const composer = document.getElementById('composer');
-    const postBtn = document.getElementById('postBtn');
-    if(postBtn){
+    // Composer post
+    if(postBtn && composer){
         postBtn.addEventListener('click', ()=>{
             const text = composer.value.trim();
-            if(!text) return; // no empty posts
+            if(!text) return;
             const el = document.createElement('article');
             el.className = 'post card fade-in';
             el.innerHTML = `<div class="post-header"><img src="assets/images/login.png" class="post-avatar" alt="You"><div><strong>You</strong><div class="muted small">Just now • Friends</div></div></div><div class="post-body">${escapeHtml(text)}</div><div class="post-actions"><button class="btn-link">Like</button><button class="btn-link">Comment</button><button class="btn-link">Share</button></div>`;
@@ -69,15 +115,7 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
-    // Chat preview click behavior
-    if(chatPreview){
-        chatPreview.querySelectorAll('li').forEach(li=>{
-            li.addEventListener('click', ()=>{
-                alert('Open chat with ' + (li.querySelector('strong')?.innerText || 'User'));
-            });
-        });
-    }
+    // Small utilities
+    function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-    // small helpers
-    function escapeHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 });
