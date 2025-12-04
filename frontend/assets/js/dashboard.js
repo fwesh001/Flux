@@ -67,54 +67,119 @@ document.addEventListener('DOMContentLoaded', function(){
         window.themeManager.updateThemeToggleIcon();
     }
 
-    // Collapse behavior: toggle compact sidebar
+    // Persisted sidebar state keys
+    const SIDEBAR_COLLAPSED_KEY = 'flux:sidebar:collapsed';
+    const SIDEBAR_OPEN_KEY = 'flux:sidebar:open';
+
+    // Collapse behavior: toggle compact sidebar (persisted)
     if(collapseBtn && sidebar){
+        // restore collapsed state
+        try{
+            const collapsed = localStorage.getItem(SIDEBAR_COLLAPSED_KEY);
+            if(collapsed === 'true') sidebar.classList.add('collapsed');
+            if(collapseBtn) collapseBtn.setAttribute('aria-pressed', String(sidebar.classList.contains('collapsed')));
+        }catch(e){/* ignore storage errors */}
+
         collapseBtn.addEventListener('click', ()=>{
-            sidebar.classList.toggle('collapsed');
+            const isCollapsed = sidebar.classList.toggle('collapsed');
+            try{ localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(isCollapsed)); }catch(e){}
+            collapseBtn.setAttribute('aria-pressed', String(isCollapsed));
         });
     }
 
-    // Header hamburger: on small screens toggle `.open` to show sidebar
+    // Header hamburger: on small screens toggle `.open` to show sidebar (persisted)
     if(sidebarToggle && sidebar){
+        // restore open state
+        try{
+            const open = localStorage.getItem(SIDEBAR_OPEN_KEY);
+            const isOpen = open === 'true';
+            if(isOpen) sidebar.classList.add('open');
+            sidebarToggle.setAttribute('aria-expanded', String(isOpen));
+            if(isOpen) sidebar.classList.remove('hidden');
+        }catch(e){}
+
         sidebarToggle.setAttribute('aria-expanded', 'false');
         sidebarToggle.addEventListener('click', ()=>{
             const isOpen = sidebar.classList.toggle('open');
             sidebarToggle.setAttribute('aria-expanded', String(isOpen));
+            try{ localStorage.setItem(SIDEBAR_OPEN_KEY, String(isOpen)); }catch(e){}
             if(isOpen) sidebar.classList.remove('hidden');
         });
     }
 
-    // Header menu (top-right) toggle
+    // Header menu (top-right) toggle with improved accessibility
     const headerMenuBtn = document.getElementById('headerMenuBtn');
     const headerMenu = document.getElementById('headerMenu');
     if(headerMenuBtn && headerMenu){
+        // Ensure menu items are focusable
+        const menuItems = Array.from(headerMenu.querySelectorAll('.menu-item'));
+        menuItems.forEach(mi => mi.setAttribute('tabindex', '0'));
+
+        let focusIndex = -1;
+        function openHeaderMenu(){
+            headerMenu.classList.add('open');
+            headerMenuBtn.setAttribute('aria-expanded','true');
+            headerMenu.setAttribute('aria-hidden','false');
+            // focus first item
+            focusIndex = 0;
+            if(menuItems[0]) menuItems[0].focus();
+            document.addEventListener('keydown', headerMenuKeyHandler);
+        }
+
+        function closeHeaderMenu(){
+            headerMenu.classList.remove('open');
+            headerMenuBtn.setAttribute('aria-expanded','false');
+            headerMenu.setAttribute('aria-hidden','true');
+            headerMenuBtn.focus();
+            focusIndex = -1;
+            document.removeEventListener('keydown', headerMenuKeyHandler);
+        }
+
         headerMenuBtn.addEventListener('click', (e)=>{
-            const isOpen = headerMenu.classList.toggle('open');
-            headerMenuBtn.setAttribute('aria-expanded', String(isOpen));
-            headerMenu.setAttribute('aria-hidden', String(!isOpen));
+            const isOpen = headerMenu.classList.contains('open');
+            if(isOpen) closeHeaderMenu(); else openHeaderMenu();
         });
 
-        // close on outside click
+        // close on outside click (but ignore clicks inside menu)
         document.addEventListener('click', (e)=>{
             if(!headerMenu.contains(e.target) && !headerMenuBtn.contains(e.target)){
-                if(headerMenu.classList.contains('open')){
-                    headerMenu.classList.remove('open');
-                    headerMenuBtn.setAttribute('aria-expanded','false');
-                    headerMenu.setAttribute('aria-hidden','true');
-                }
+                if(headerMenu.classList.contains('open')) closeHeaderMenu();
             }
         });
 
-        // close on Esc
-        document.addEventListener('keydown', (e)=>{
+        // keyboard navigation within menu
+        function headerMenuKeyHandler(e){
+            const max = menuItems.length - 1;
             if(e.key === 'Escape'){
-                if(headerMenu.classList.contains('open')){
-                    headerMenu.classList.remove('open');
-                    headerMenuBtn.setAttribute('aria-expanded','false');
-                    headerMenu.setAttribute('aria-hidden','true');
-                }
+                closeHeaderMenu();
+                return;
             }
-        });
+            if(e.key === 'ArrowDown'){
+                e.preventDefault();
+                focusIndex = Math.min(max, focusIndex + 1);
+                menuItems[focusIndex].focus();
+                return;
+            }
+            if(e.key === 'ArrowUp'){
+                e.preventDefault();
+                focusIndex = Math.max(0, focusIndex - 1);
+                menuItems[focusIndex].focus();
+                return;
+            }
+            if(e.key === 'Home'){
+                e.preventDefault(); focusIndex = 0; menuItems[0].focus(); return;
+            }
+            if(e.key === 'End'){
+                e.preventDefault(); focusIndex = max; menuItems[max].focus(); return;
+            }
+            if(e.key === 'Tab'){
+                // allow tab to close the menu and proceed
+                closeHeaderMenu();
+            }
+        }
+
+        // Also close when a menu item is activated
+        menuItems.forEach(mi => mi.addEventListener('click', ()=>{ closeHeaderMenu(); }));
     }
 
     // Close button inside sidebar
@@ -166,6 +231,69 @@ document.addEventListener('DOMContentLoaded', function(){
             composer.value = '';
         });
     }
+
+    // Composer autosave + character count
+    (function(){
+        const COMPOSER_KEY = 'flux:composer:draft';
+        const MAX_CHARS = 280;
+        if(!composer) return;
+
+        // create a small controls container if not present
+        let controls = document.querySelector('.composer-controls');
+        if(!controls){
+            controls = document.createElement('div');
+            controls.className = 'composer-controls';
+            const count = document.createElement('div');
+            count.className = 'char-count';
+            count.id = 'composerCount';
+            const holder = composer.parentNode;
+            if(holder) holder.appendChild(controls);
+            controls.appendChild(count);
+        }
+
+        const countEl = document.getElementById('composerCount');
+        let saveTimer = null;
+
+        function updateCharCount(){
+            if(!countEl) return;
+            const len = (composer.value || '').length;
+            const rem = MAX_CHARS - len;
+            countEl.textContent = `${rem} characters left`;
+            countEl.classList.remove('warning','exceeded');
+            if(rem < 0) countEl.classList.add('exceeded');
+            else if(rem < 30) countEl.classList.add('warning');
+        }
+
+        // restore draft
+        try{
+            const draft = localStorage.getItem(COMPOSER_KEY);
+            if(draft) composer.value = draft;
+        }catch(e){}
+        updateCharCount();
+
+        composer.addEventListener('input', ()=>{
+            updateCharCount();
+            if(saveTimer) clearTimeout(saveTimer);
+            saveTimer = setTimeout(()=>{
+                try{ localStorage.setItem(COMPOSER_KEY, composer.value); }catch(e){}
+            }, 700);
+        });
+
+        // keyboard shortcut: Ctrl/Cmd + Enter to post
+        composer.addEventListener('keydown', (e)=>{
+            if((e.ctrlKey || e.metaKey) && e.key === 'Enter'){
+                if(postBtn) postBtn.click();
+            }
+        });
+
+        // clear draft on successful post
+        if(postBtn){
+            postBtn.addEventListener('click', ()=>{
+                try{ localStorage.removeItem(COMPOSER_KEY); }catch(e){}
+                updateCharCount();
+            });
+        }
+    })();
 
     // Small utilities
     function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }

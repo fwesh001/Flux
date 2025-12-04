@@ -146,6 +146,18 @@
     color: var(--color-primary);
 }
 
+/* Improved focus styles for keyboard users */
+.header-menu .menu-item:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Composer character count / controls (created dynamically if missing) */
+.composer-controls { display:flex; justify-content:space-between; align-items:center; gap:0.5rem; margin-top:0.5rem; }
+.composer-controls .char-count { font-size:0.9rem; color:var(--color-text-tertiary); }
+.composer-controls .char-count.warning { color: var(--color-warning); }
+.composer-controls .char-count.exceeded { color: var(--color-danger); font-weight:600; }
+
 /* Make sure header is positioned to allow absolute menu */
 .header { position: sticky; top:0; z-index:1100; }
 
