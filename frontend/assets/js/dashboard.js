@@ -15,6 +15,52 @@ document.addEventListener('DOMContentLoaded', function(){
         document.documentElement.classList.add('theme-' + (name || 'eyecare'));
     }
 
+    // Welcome card personalization: set greeting and last-visit
+    (function(){
+        const greetingEl = document.getElementById('welcomeGreeting');
+        const lastVisitEl = document.getElementById('welcomeLastVisit');
+        const viewBtn = document.getElementById('viewHighlightsBtn');
+        try{
+            if(greetingEl){
+                // try to read profile name if present
+                const profileNameEl = document.querySelector('.profile-name');
+                let name = 'there';
+                if(profileNameEl){
+                    const txt = profileNameEl.textContent.trim().split(/\s+/)[0];
+                    if(txt) name = txt;
+                }
+                greetingEl.textContent = `Welcome back, ${name}!`;
+            }
+
+            if(lastVisitEl){
+                const key = 'flux:lastVisit';
+                const prev = localStorage.getItem(key);
+                const now = Date.now();
+                let msg = 'Nice to see you.';
+                if(prev){
+                    const diff = Math.floor((now - Number(prev)) / 1000);
+                    if(diff < 60) msg = 'Last seen just now';
+                    else if(diff < 3600) msg = `Last seen ${Math.floor(diff/60)}m ago`;
+                    else if(diff < 86400) msg = `Last seen ${Math.floor(diff/3600)}h ago`;
+                    else {
+                        const d = new Date(Number(prev));
+                        msg = `Last seen on ${d.toLocaleDateString()}`;
+                    }
+                }
+                lastVisitEl.textContent = msg;
+                localStorage.setItem(key, String(now));
+            }
+
+            if(viewBtn){
+                viewBtn.addEventListener('click', ()=>{
+                    // simple behavior: scroll to feed (if present)
+                    const feed = document.querySelector('.feed');
+                    if(feed) feed.scrollIntoView({behavior:'smooth'});
+                });
+            }
+        }catch(e){ console.warn('Welcome card init error', e); }
+    })();
+
     // Ensure global ThemeManager (from theme.js) is synchronized with this page
     if(window.themeManager && typeof window.themeManager.updateThemeToggleIcon === 'function'){
         // Update the header theme button icon to match current theme

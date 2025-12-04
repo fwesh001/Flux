@@ -39,6 +39,42 @@ class AuthForm {
                 this.handleSocialLogin(btn);
             });
         });
+
+        // If this is the login form, setup welcome preview
+        if (this.isLogin) this.setupWelcomePreview();
+    }
+
+    /**
+     * Setup welcome preview under the Sign In title (Login only)
+     * Shows the part before the @ from the email input as a friendly greeting.
+     */
+    setupWelcomePreview() {
+        const emailInput = document.getElementById('email');
+        const welcomeEl = document.getElementById('loginWelcome');
+        if (!emailInput || !welcomeEl) return;
+
+        const updateWelcome = () => {
+            const raw = emailInput.value || '';
+            const trimmed = raw.trim();
+            if (!trimmed) {
+                welcomeEl.style.display = 'none';
+                welcomeEl.textContent = '';
+                return;
+            }
+
+            // Extract substring before '@' if present
+            const atIndex = trimmed.indexOf('@');
+            const namePart = atIndex > 0 ? trimmed.slice(0, atIndex) : trimmed;
+            // Clean and capitalize first segment
+            const display = namePart.split(/[\.\-_\s]/)[0] || namePart;
+            const label = display.charAt(0).toUpperCase() + display.slice(1);
+            welcomeEl.textContent = `Welcome, ${label}!`;
+            welcomeEl.style.display = 'block';
+        };
+
+        emailInput.addEventListener('input', updateWelcome);
+        // Also update on blur for keyboard users
+        emailInput.addEventListener('blur', updateWelcome);
     }
 
     /**
