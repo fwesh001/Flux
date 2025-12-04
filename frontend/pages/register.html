@@ -34,51 +34,17 @@
 
     <!-- Main Content -->
     <main class="auth-main">
-        <!-- Auth Container -->
         <div class="auth-container">
-            <!-- Left Section - Hero -->
-            <section class="auth-hero">
-                <div class="auth-hero-content">
-                    <h1 class="auth-hero-title">Join Flux Today</h1>
-                    <p class="auth-hero-description">
-                        Create your account and join a modern, eyecare-friendly social platform. Share moments, chat with friends, and stay connected.
-                    </p>
-                    
-                    <!-- Hero Illustration -->
-                    <div class="auth-illustration">
-                        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Background Circle -->
-                            <circle cx="150" cy="150" r="140" fill="var(--color-primary-lighter)" opacity="0.3"/>
-                            
-                            <!-- Signup Icon (Person + Plus) -->
-                            <g transform="translate(110, 90)">
-                                <!-- Person Circle -->
-                                <circle cx="40" cy="25" r="15" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
-                                
-                                <!-- Person Body -->
-                                <path d="M 30 45 Q 30 42 40 42 Q 50 42 50 45 L 50 65 Q 50 70 40 70 Q 30 70 30 65 Z" 
-                                      fill="none" stroke="var(--color-primary)" stroke-width="3"/>
-                                
-                                <!-- Plus Sign -->
-                                <g opacity="0.7">
-                                    <line x1="70" y1="25" x2="90" y2="25" stroke="var(--color-primary)" stroke-width="3" stroke-linecap="round"/>
-                                    <line x1="80" y1="15" x2="80" y2="35" stroke="var(--color-primary)" stroke-width="3" stroke-linecap="round"/>
-                                </g>
-                            </g>
-                            
-                            <!-- Decorative Elements -->
-                            <circle cx="60" cy="240" r="10" fill="var(--color-primary)" opacity="0.4"/>
-                            <circle cx="240" cy="80" r="8" fill="var(--color-primary)" opacity="0.3"/>
-                            <path d="M 220 250 L 235 265" stroke="var(--color-primary)" stroke-width="3" opacity="0.3"/>
-                        </svg>
-                    </div>
-
-                    <!-- Bottom CTA Link -->
-                    <div class="auth-footer-link">
-                        <p>Already have an account? <a href="login.html" class="link-accent">Sign in here</a></p>
-                    </div>
+            <!-- Left Section - Image Sidebar (image only) -->
+            <aside class="auth-aside">
+                <div class="auth-illustration">
+                    <img 
+                        src="../assets/images/register.jpg" 
+                        alt="Register illustration showing account creation"
+                        class="auth-image"
+                    >
                 </div>
-            </section>
+            </aside>
 
             <!-- Right Section - Form -->
             <section class="auth-form-section">
@@ -240,6 +206,7 @@
                             <span class="social-icon">🍎</span>
                         </button>
                     </div>
+                    <p class="auth-form-note">Already have an account? <a href="login.html" class="link-accent">Sign in</a></p>
                 </form>
 
                 <!-- Additional Info -->

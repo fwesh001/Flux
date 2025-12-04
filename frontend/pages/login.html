@@ -34,49 +34,17 @@
 
     <!-- Main Content -->
     <main class="auth-main">
-        <!-- Auth Container -->
         <div class="auth-container">
-            <!-- Left Section - Hero -->
-            <section class="auth-hero">
-                <div class="auth-hero-content">
-                    <h1 class="auth-hero-title">Welcome Back</h1>
-                    <p class="auth-hero-description">
-                        Login to your Flux account and continue connecting with ease. Share moments, chat instantly, and stay in the loop.
-                    </p>
-                    
-                    <!-- Hero Illustration -->
-                    <div class="auth-illustration">
-                        <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Background Circle -->
-                            <circle cx="150" cy="150" r="140" fill="var(--color-primary-lighter)" opacity="0.3"/>
-                            
-                            <!-- Login Icon (Message) -->
-                            <g transform="translate(120, 100)">
-                                <!-- Envelope -->
-                                <rect x="0" y="30" width="100" height="70" rx="8" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
-                                <path d="M 0 30 L 50 65 L 100 30" fill="none" stroke="var(--color-primary)" stroke-width="3"/>
-                                
-                                <!-- Lock Circle -->
-                                <circle cx="70" cy="20" r="18" fill="var(--color-primary)" opacity="0.2"/>
-                                <circle cx="70" cy="20" r="15" fill="none" stroke="var(--color-primary)" stroke-width="2.5"/>
-                                
-                                <!-- Lock Shackle -->
-                                <path d="M 65 20 Q 65 12 70 12 Q 75 12 75 20" fill="none" stroke="var(--color-primary)" stroke-width="2.5"/>
-                            </g>
-                            
-                            <!-- Decorative Elements -->
-                            <circle cx="50" cy="60" r="8" fill="var(--color-primary)" opacity="0.4"/>
-                            <circle cx="250" cy="220" r="12" fill="var(--color-primary)" opacity="0.3"/>
-                            <path d="M 30 200 L 40 210" stroke="var(--color-primary)" stroke-width="3" opacity="0.3"/>
-                        </svg>
-                    </div>
-
-                    <!-- Bottom CTA Link -->
-                    <div class="auth-footer-link">
-                        <p>Don't have an account? <a href="register.html" class="link-accent">Create one now</a></p>
-                    </div>
+            <!-- Left Section - Image Sidebar (image only) -->
+            <aside class="auth-aside">
+                <div class="auth-illustration">
+                    <img 
+                        src="../assets/images/login.png" 
+                        alt="Login illustration showing secure sign-in"
+                        class="auth-image"
+                    >
                 </div>
-            </section>
+            </aside>
 
             <!-- Right Section - Form -->
             <section class="auth-form-section">
@@ -170,6 +138,7 @@
                             <span class="social-icon">🍎</span>
                         </button>
                     </div>
+                    <p class="auth-form-note">Don't have an account? <a href="register.html" class="link-accent">Create one</a></p>
                 </form>
 
                 <!-- Additional Info -->
