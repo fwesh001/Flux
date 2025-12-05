@@ -45,6 +45,69 @@
         </div>
     </div>
 
+    <!-- Main app shell: left nav, feed, right widgets -->
+    <div class="container app-shell" aria-live="polite">
+        <!-- Left Sidebar / Navigation -->
+        <aside id="sidebar" class="sidebar" role="navigation" aria-label="Main navigation">
+            <div class="profile">
+                <img src="assets/images/avatar-placeholder.png" alt="Profile" class="avatar-img">
+                <div>
+                    <div class="profile-name">Your Name</div>
+                    <div class="muted">@username</div>
+                </div>
+                <button id="collapseBtn" class="btn-icon" title="Collapse sidebar" aria-pressed="false">◀</button>
+            </div>
+
+            <nav class="side-nav" aria-label="Sidebar links">
+                <button class="side-link" role="link"><span class="dots">● ● ● ● ● ●</span></button>
+                <button class="side-link" role="link"><span class="dots">● ● ● ● ● ●</span></button>
+                <button class="side-link" role="link"><span class="dots">● ● ● ● ● ●</span></button>
+                <button class="side-link" role="link"><span class="dots">● ● ● ● ● ●</span></button>
+                <button class="side-link" role="link"><span class="dots">● ● ● ● ● ●</span></button>
+            </nav>
+            <button id="closeSidebar" class="close-sidebar visually-hidden" aria-hidden="true">Close</button>
+        </aside>
+
+        <!-- Central Feed -->
+        <main class="feed" role="main">
+            <!-- Composer / top controls (matches image: message + filters) -->
+            <div class="feed-top">
+                <div class="composer card" style="width:100%">
+                    <div class="composer-row" style="display:flex;gap:0.75rem;align-items:center;">
+                        <input id="composer" type="text" placeholder="Message" aria-label="Write a message" style="flex:1;padding:0.65rem;border-radius:8px;border:1px solid var(--color-border);background:var(--color-bg);">
+                        <label class="btn btn-secondary" style="display:flex;align-items:center;gap:0.4rem;">
+                            <input id="composerFiles" type="file" accept="image/*,audio/*,video/*,application/pdf" multiple style="display:none">
+                            <i class="fas fa-paperclip" aria-hidden="true"></i>
+                            <span class="visually-hidden">Attach files</span>
+                        </label>
+                        <button class="btn btn-secondary">••••</button>
+                        <button id="postBtn" class="btn btn-primary">Post</button>
+                    </div>
+                    <!-- Attachment preview area -->
+                    <div id="composerPreview" style="margin-top:0.6rem;display:flex;gap:0.5rem;flex-wrap:wrap;"></div>
+                </div>
+            </div>
+
+            <!-- Posts container -->
+            <section id="posts" aria-live="polite">
+                <!-- posts will be rendered dynamically (infinite scroll / composer) -->
+            </section>
+
+            <div id="loading" style="display:none;text-align:center;padding:1rem;">Loading...</div>
+        </main>
+
+        <!-- Right widgets -->
+        <aside class="widgets" role="complementary" aria-label="Highlights and widgets" style="width:260px;flex:0 0 260px;">
+            <div class="card widget highlight" style="margin-bottom:1rem; height:140px; border-radius:18px;"></div>
+            <div class="card widget list" style="height:320px; border-radius:18px; padding:0.75rem; display:flex; flex-direction:column; gap:0.5rem;">
+                <div class="muted">● ● ● ● ● ●</div>
+                <div class="muted">● ● ● ● ● ●</div>
+                <div class="muted">● ● ● ● ● ●</div>
+                <div class="muted">● ● ● ● ● ●</div>
+            </div>
+        </aside>
+    </div>
+
     <!-- Header menu (top-right) -->
     <div id="headerMenu" class="header-menu" role="menu" aria-hidden="true">
         <button class="menu-item" role="menuitem"><i class="fas fa-chart-bar" aria-hidden="true"></i>Overview</button>

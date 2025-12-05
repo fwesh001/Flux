@@ -191,6 +191,21 @@ document.addEventListener('DOMContentLoaded', function(){
         });
     }
 
+    // Allow clicking the profile area to toggle collapse (desktop UX)
+    try{
+        const profileArea = sidebar ? sidebar.querySelector('.profile') : null;
+        if(profileArea && collapseBtn){
+            profileArea.style.cursor = 'pointer';
+            profileArea.addEventListener('click', (e)=>{
+                // ignore clicks on the explicit collapse button itself
+                if(e.target && (e.target.id === 'collapseBtn' || e.target.closest && e.target.closest('#collapseBtn'))) return;
+                const isCollapsed = sidebar.classList.toggle('collapsed');
+                try{ localStorage.setItem(SIDEBAR_COLLAPSED_KEY, String(isCollapsed)); }catch(e){}
+                if(collapseBtn) collapseBtn.setAttribute('aria-pressed', String(isCollapsed));
+            });
+        }
+    }catch(e){/* ignore */}
+
     // Infinite scroll placeholder
     let loadingPosts = false;
     window.addEventListener('scroll', ()=>{
@@ -206,15 +221,20 @@ document.addEventListener('DOMContentLoaded', function(){
             }, 800);
         }
     });
-
+ 
     function appendDummyPost(){
         if(!postsEl) return;
-        const a = document.createElement('article');
-        a.className = 'post card fade-in';
+            const a = document.createElement('article');
+        a.className = 'post card feed-card fade-in';
         a.innerHTML = `
-            <div class="post-header"><img src="assets/images/login.png" class="post-avatar" alt="User"><div><strong>Auto</strong><div class="muted small">Just now • Public</div></div></div>
-            <div class="post-body">This is a newly loaded post. Infinite scroll placeholder.</div>
-            <div class="post-actions"><button class="btn-link">Like</button><button class="btn-link">Comment</button><button class="btn-link">Share</button></div>
+            <div class="corner-avatar" aria-hidden="true"><div class="avatar-circle"></div></div>
+            <div class="feed-body">
+                <div class="feed-content">This is a newly loaded post. Infinite scroll placeholder.</div>
+                <div class="feed-meta">
+                    <div class="meta-left"><button class="btn-link">Like</button> <button class="btn-link">views</button></div>
+                    <div class="meta-right muted">● ● ● ● ● ● ● ●</div>
+                </div>
+            </div>
         `;
         postsEl.appendChild(a);
     }
@@ -225,54 +245,35 @@ document.addEventListener('DOMContentLoaded', function(){
             const text = composer.value.trim();
             if(!text) return;
             const el = document.createElement('article');
-            el.className = 'post card fade-in';
-            el.innerHTML = `<div class="post-header"><img src="assets/images/login.png" class="post-avatar" alt="You"><div><strong>You</strong><div class="muted small">Just now • Friends</div></div></div><div class="post-body">${escapeHtml(text)}</div><div class="post-actions"><button class="btn-link">Like</button><button class="btn-link">Comment</button><button class="btn-link">Share</button></div>`;
+            el.className = 'post card feed-card fade-in';
+            el.innerHTML = `
+                <div class="feed-body">
+                    <div class="feed-content">${escapeHtml(text)}</div>
+                    <div class="feed-meta">
+                        <div class="meta-left"><button class="btn-link">Like</button> <button class="btn-link">views</button></div>
+                        <div class="meta-right muted">● ● ● ● ● ● ● ●</div>
+                    </div>
+                </div>
+            `;
+            // insert at top of posts
             postsEl.insertBefore(el, postsEl.firstChild);
             composer.value = '';
         });
     }
 
-    // Composer autosave + character count
+    // Composer autosave + attachment handling (no visible character count)
     (function(){
         const COMPOSER_KEY = 'flux:composer:draft';
-        const MAX_CHARS = 280;
         if(!composer) return;
-
-        // create a small controls container if not present
-        let controls = document.querySelector('.composer-controls');
-        if(!controls){
-            controls = document.createElement('div');
-            controls.className = 'composer-controls';
-            const count = document.createElement('div');
-            count.className = 'char-count';
-            count.id = 'composerCount';
-            const holder = composer.parentNode;
-            if(holder) holder.appendChild(controls);
-            controls.appendChild(count);
-        }
-
-        const countEl = document.getElementById('composerCount');
-        let saveTimer = null;
-
-        function updateCharCount(){
-            if(!countEl) return;
-            const len = (composer.value || '').length;
-            const rem = MAX_CHARS - len;
-            countEl.textContent = `${rem} characters left`;
-            countEl.classList.remove('warning','exceeded');
-            if(rem < 0) countEl.classList.add('exceeded');
-            else if(rem < 30) countEl.classList.add('warning');
-        }
 
         // restore draft
         try{
             const draft = localStorage.getItem(COMPOSER_KEY);
             if(draft) composer.value = draft;
         }catch(e){}
-        updateCharCount();
 
+        let saveTimer = null;
         composer.addEventListener('input', ()=>{
-            updateCharCount();
             if(saveTimer) clearTimeout(saveTimer);
             saveTimer = setTimeout(()=>{
                 try{ localStorage.setItem(COMPOSER_KEY, composer.value); }catch(e){}
@@ -290,9 +291,86 @@ document.addEventListener('DOMContentLoaded', function(){
         if(postBtn){
             postBtn.addEventListener('click', ()=>{
                 try{ localStorage.removeItem(COMPOSER_KEY); }catch(e){}
-                updateCharCount();
             });
         }
+
+        // Attachment handling
+        const fileInput = document.getElementById('composerFiles');
+        const preview = document.getElementById('composerPreview');
+        let attachments = [];
+
+        function clearPreview(){
+            attachments = [];
+            if(preview) preview.innerHTML = '';
+            if(fileInput) fileInput.value = '';
+        }
+
+        if(fileInput){
+            fileInput.addEventListener('change', (e)=>{
+                const files = Array.from(e.target.files || []);
+                files.forEach(f => attachments.push(f));
+                renderPreviews();
+            });
+        }
+
+        function renderPreviews(){
+            if(!preview) return;
+            preview.innerHTML = '';
+            attachments.forEach((f, idx) => {
+                const item = document.createElement('div');
+                item.className = 'composer-attachment';
+                item.style.minWidth = '64px';
+                item.style.maxWidth = '180px';
+                item.style.border = '1px solid var(--color-border)';
+                item.style.borderRadius = '8px';
+                item.style.padding = '6px';
+                item.style.background = 'var(--color-bg)';
+                item.style.display = 'flex';
+                item.style.flexDirection = 'column';
+                item.style.alignItems = 'center';
+                item.style.gap = '6px';
+
+                const name = document.createElement('div');
+                name.textContent = f.name;
+                name.style.fontSize = '0.8rem';
+                name.style.color = 'var(--color-text-secondary)';
+
+                if(f.type.startsWith('image/')){
+                    const img = document.createElement('img');
+                    img.style.maxWidth = '160px';
+                    img.style.maxHeight = '120px';
+                    img.style.objectFit = 'cover';
+                    img.alt = f.name;
+                    const reader = new FileReader();
+                    reader.onload = (ev)=>{ img.src = ev.target.result; }
+                    reader.readAsDataURL(f);
+                    item.appendChild(img);
+                }else{
+                    const icon = document.createElement('div');
+                    icon.textContent = f.type.split('/')[0];
+                    icon.style.fontSize = '0.85rem';
+                    icon.style.color = 'var(--color-text-tertiary)';
+                    item.appendChild(icon);
+                }
+
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'btn-icon';
+                removeBtn.textContent = '✕';
+                removeBtn.title = 'Remove attachment';
+                removeBtn.addEventListener('click', ()=>{
+                    attachments.splice(idx,1);
+                    renderPreviews();
+                });
+
+                item.appendChild(name);
+                item.appendChild(removeBtn);
+                preview.appendChild(item);
+            });
+        }
+
+        // Expose attachments array to outer scope by closing over it
+        composer._attachments = attachments;
+        composer.clearAttachments = clearPreview;
     })();
 
     // Small utilities
