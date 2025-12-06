@@ -261,7 +261,10 @@ document.addEventListener('DOMContentLoaded', function(){
             el.innerHTML = `
                 <div class="corner-avatar" aria-hidden="true"><div class="avatar-circle"></div></div>
                 <div class="feed-body">
-                    <div class="feed-content"></div>
+                    <div class="feed-content">
+                        <div class="feed-text"></div>
+                        <div class="feed-attachments" aria-live="polite"></div>
+                    </div>
                     <div class="feed-meta">
                         <div class="meta-left"><button class="btn-link">Like</button> <button class="btn-link">views</button></div>
                         <div class="meta-right muted">● ● ● ● ● ● ● ●</div>
@@ -269,38 +272,41 @@ document.addEventListener('DOMContentLoaded', function(){
                 </div>
             `;
 
-            const contentEl = el.querySelector('.feed-content');
-            if(contentEl){
-                if(text) contentEl.appendChild(document.createTextNode(text));
+            const textEl = el.querySelector('.feed-text');
+            const attachEl = el.querySelector('.feed-attachments');
 
-                // render attachments (use object URLs)
-                (attachments || []).forEach((f)=>{
-                    try{
-                        if(f.type && f.type.startsWith('image/')){
-                            const img = document.createElement('img');
-                            const url = URL.createObjectURL(f);
-                            img.src = url;
-                            img.alt = f.name || 'image';
-                            img.style.maxWidth = '100%';
-                            img.style.height = 'auto';
-                            img.style.marginTop = '0.6rem';
-                            img.addEventListener('load', ()=>{ URL.revokeObjectURL(url); });
-                            contentEl.appendChild(img);
-                        } else {
-                            const a = document.createElement('a');
-                            a.className = 'attachment';
-                            const url = URL.createObjectURL(f);
-                            a.href = url;
-                            a.textContent = f.name || 'attachment';
-                            a.target = '_blank';
-                            a.rel = 'noopener noreferrer';
-                            a.style.display = 'block';
-                            a.style.marginTop = '0.5rem';
-                            contentEl.appendChild(a);
-                        }
-                    }catch(e){ console.warn('attachment render error', e); }
-                });
+            if(textEl && text) {
+                const p = document.createElement('div');
+                p.textContent = text;
+                p.className = 'feed-text-content';
+                textEl.appendChild(p);
             }
+
+            // render attachments into separate container
+            (attachments || []).forEach((f)=>{
+                try{
+                    if(f.type && f.type.startsWith('image/')){
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'feed-attachment-item';
+                        const img = document.createElement('img');
+                        const url = URL.createObjectURL(f);
+                        img.src = url;
+                        img.alt = f.name || 'image';
+                        img.addEventListener('load', ()=>{ URL.revokeObjectURL(url); });
+                        wrapper.appendChild(img);
+                        attachEl.appendChild(wrapper);
+                    } else {
+                        const a = document.createElement('a');
+                        a.className = 'attachment';
+                        const url = URL.createObjectURL(f);
+                        a.href = url;
+                        a.textContent = f.name || 'attachment';
+                        a.target = '_blank';
+                        a.rel = 'noopener noreferrer';
+                        attachEl.appendChild(a);
+                    }
+                }catch(e){ console.warn('attachment render error', e); }
+            });
 
             // insert at top of posts
             postsEl.insertBefore(el, postsEl.firstChild);
@@ -425,6 +431,54 @@ document.addEventListener('DOMContentLoaded', function(){
         composer._attachments = attachments;
         composer.clearAttachments = clearPreview;
     })();
+
+    // Lightbox / full-size image viewer
+    function createLightboxElements(){
+        if(document.getElementById('lightboxOverlay')) return document.getElementById('lightboxOverlay');
+        const overlay = document.createElement('div');
+        overlay.id = 'lightboxOverlay';
+        overlay.className = 'lightbox-overlay';
+        overlay.innerHTML = `<div class="lightbox-inner"><button class="lightbox-close" aria-label="Close">✕</button><img class="lightbox-img" alt="Preview"/><div class="lightbox-caption muted"></div></div>`;
+        document.body.appendChild(overlay);
+
+        const closeBtn = overlay.querySelector('.lightbox-close');
+        function closeHandler(e){
+            overlay.classList.remove('open');
+        }
+
+        overlay.addEventListener('click', (e)=>{
+            if(e.target === overlay || e.target === closeBtn) closeHandler();
+        });
+
+        // close on escape
+        function escHandler(e){ if(e.key === 'Escape') closeHandler(); }
+        document.addEventListener('keydown', escHandler);
+
+        return overlay;
+    }
+
+    function openLightbox(src, caption){
+        const overlay = createLightboxElements();
+        if(!overlay) return;
+        const img = overlay.querySelector('.lightbox-img');
+        const cap = overlay.querySelector('.lightbox-caption');
+        img.src = src;
+        cap.textContent = caption || '';
+        overlay.classList.add('open');
+    }
+
+    // delegate click on post images to open lightbox
+    if(postsEl){
+        postsEl.addEventListener('click', (e)=>{
+            try{
+                const clicked = e.target;
+                const img = clicked.closest ? clicked.closest('.feed-attachment-item img, .feed-content img') : null;
+                if(img){
+                    openLightbox(img.src, img.alt || '');
+                }
+            }catch(err){ /* ignore */ }
+        });
+    }
 
     // Small utilities
     function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
