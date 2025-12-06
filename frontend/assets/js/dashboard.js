@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const greetingEl = document.getElementById('welcomeGreeting');
         const lastVisitEl = document.getElementById('welcomeLastVisit');
         const viewBtn = document.getElementById('viewHighlightsBtn');
+        const welcomeCard = document.getElementById('welcomeCard');
         try{
             if(greetingEl){
                 // try to read profile name if present
@@ -58,6 +59,14 @@ document.addEventListener('DOMContentLoaded', function(){
                     if(feed) feed.scrollIntoView({behavior:'smooth'});
                 });
             }
+            // hide welcome card after 60 seconds with fade
+            try{
+                if(welcomeCard){
+                    setTimeout(()=>{
+                        welcomeCard.classList.add('hidden');
+                    }, 60000);
+                }
+            }catch(e){}
         }catch(e){ console.warn('Welcome card init error', e); }
     })();
 
@@ -243,21 +252,62 @@ document.addEventListener('DOMContentLoaded', function(){
     if(postBtn && composer){
         postBtn.addEventListener('click', ()=>{
             const text = composer.value.trim();
-            if(!text) return;
+            const attachments = composer._attachments || [];
+            // require either text or at least one attachment
+            if(!text && (!attachments || attachments.length === 0)) return;
+
             const el = document.createElement('article');
             el.className = 'post card feed-card fade-in';
             el.innerHTML = `
+                <div class="corner-avatar" aria-hidden="true"><div class="avatar-circle"></div></div>
                 <div class="feed-body">
-                    <div class="feed-content">${escapeHtml(text)}</div>
+                    <div class="feed-content"></div>
                     <div class="feed-meta">
                         <div class="meta-left"><button class="btn-link">Like</button> <button class="btn-link">views</button></div>
                         <div class="meta-right muted">● ● ● ● ● ● ● ●</div>
                     </div>
                 </div>
             `;
+
+            const contentEl = el.querySelector('.feed-content');
+            if(contentEl){
+                if(text) contentEl.appendChild(document.createTextNode(text));
+
+                // render attachments (use object URLs)
+                (attachments || []).forEach((f)=>{
+                    try{
+                        if(f.type && f.type.startsWith('image/')){
+                            const img = document.createElement('img');
+                            const url = URL.createObjectURL(f);
+                            img.src = url;
+                            img.alt = f.name || 'image';
+                            img.style.maxWidth = '100%';
+                            img.style.height = 'auto';
+                            img.style.marginTop = '0.6rem';
+                            img.addEventListener('load', ()=>{ URL.revokeObjectURL(url); });
+                            contentEl.appendChild(img);
+                        } else {
+                            const a = document.createElement('a');
+                            a.className = 'attachment';
+                            const url = URL.createObjectURL(f);
+                            a.href = url;
+                            a.textContent = f.name || 'attachment';
+                            a.target = '_blank';
+                            a.rel = 'noopener noreferrer';
+                            a.style.display = 'block';
+                            a.style.marginTop = '0.5rem';
+                            contentEl.appendChild(a);
+                        }
+                    }catch(e){ console.warn('attachment render error', e); }
+                });
+            }
+
             // insert at top of posts
             postsEl.insertBefore(el, postsEl.firstChild);
+
+            // clear composer and attachments
             composer.value = '';
+            if(typeof composer.clearAttachments === 'function') composer.clearAttachments();
         });
     }
 
@@ -300,9 +350,12 @@ document.addEventListener('DOMContentLoaded', function(){
         let attachments = [];
 
         function clearPreview(){
-            attachments = [];
+            // clear in-place so external reference (composer._attachments) stays valid
+            attachments.length = 0;
             if(preview) preview.innerHTML = '';
             if(fileInput) fileInput.value = '';
+            // ensure external reference points to same array
+            composer._attachments = attachments;
         }
 
         if(fileInput){
